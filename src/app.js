@@ -1,6 +1,7 @@
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const express = require("express");
+const auth = require("./auth");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(
   })
 );
 
+app.use(auth);
 app.use("/api/groceries", groceriesRoutes);
 app.use("/api/cart", cartRoutes);
 
