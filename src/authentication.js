@@ -5,4 +5,4 @@ const authentication = (req, res, next) => {
   res.send("You are not authenticated!");
 };
 
-module.exports = authentication;
+module.exports = { authentication };

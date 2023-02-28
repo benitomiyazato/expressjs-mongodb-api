@@ -7,7 +7,7 @@ const app = express();
 const groceriesRoutes = require("./routes/groceries");
 const cartRoutes = require("./routes/cart");
 const authRoutes = require("./routes/auth");
-const authentication = require("./authentication");
+const { authentication } = require("./authentication");
 require("./database/dbConnection"); // connecting to database
 
 app.use(express.json());
