@@ -1,6 +1,7 @@
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const express = require("express");
+const passport = require("passport");
 
 const app = express();
 
@@ -8,7 +9,9 @@ const groceriesRoutes = require("./routes/groceries");
 const cartRoutes = require("./routes/cart");
 const authRoutes = require("./routes/auth");
 const { authentication } = require("./authentication");
+
 require("./database/dbConnection"); // connecting to database
+require("./strategies/local");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -19,6 +22,8 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use([passport.initialize(), passport.session()]);
 
 app.use("/api", authentication);
 

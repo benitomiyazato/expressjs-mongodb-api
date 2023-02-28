@@ -1,28 +1,6 @@
 const User = require("../database/models/User");
-const { hashPassword, comparePassword } = require("../bcrypt");
+const { hashPassword } = require("../bcrypt");
 
-const login = async (req, res) => {
-  const { username, password } = req.body;
-
-  if (!username || !password)
-    return res.status(400).send("You must send username and password");
-
-  const userDB = await User.findOne({ username });
-  if (!userDB)
-    return res.status(400).send("There's no user with this username");
-
-  const usernamePasswordValid = await comparePassword(
-    password,
-    userDB.password
-  );
-
-  if (usernamePasswordValid) {
-    req.session.isAuthenticated = true;
-    return res.status(201).send("Authentication complete");
-  }
-
-  return res.status(401).send("Invalid password");
-};
 
 const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -48,4 +26,4 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { login, register };
+module.exports = { register };
