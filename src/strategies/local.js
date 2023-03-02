@@ -4,6 +4,21 @@ const { Strategy } = require("passport-local");
 const User = require("../database/models/User");
 const { comparePassword } = require("../bcrypt");
 
+passport.serializeUser(async (user, done) => {
+  const userId = user.id;
+
+  try {
+    const userDB = await User.findById(userId);
+    if (userDB) return done(null, userId);
+  } catch (error) {
+    done(error, false);
+  }
+});
+
+passport.deserializeUser(async (userId, done) => {
+  done(null, userId);
+});
+
 passport.use(
   new Strategy(async (username, password, done) => {
     if (!username || !password)
